@@ -1,3 +1,13 @@
+import { Button } from "../ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "../ui/sheet";
+
 const TagsCard = () => {
   const tags = [
     {
@@ -70,30 +80,50 @@ const TagsCard = () => {
   ];
 
   return (
-    <div className=" w-9/12 mx-auto h-screen py-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {tags.map((tag, i) => (
-          <div
-            key={i}
-            className="flex justify-between max-w-96 bg-white shadow-md rounded-md h-32"
-          >
-            <p className="p-2 text-lg font-bold">{tag.tag}</p>
-            <img src={tag.img} className="w-32 h-32 object-cover" alt="" />
-          </div>
-        ))}
-      </div>
-      <div className="flex gap-2">
-        {
-            tasks.map((task, i) => <div key={i} className="relative">
-            <img src={task.img} alt="" className="w-44 h-44" />
-                <p className="text-lg absolute bg-gray-500 w-full text-white bottom-0 font-semibold z-40">{task.task}</p>
-            <div className="absolute bottom-0 left-0 bg-black bg-opacity-50 text-white p-4 w-44 h-44">
-                <button className="bg-blue-500 text-white px-4 py-2 mt-2 transition duration-300 ease-in-out transform translate-y-full opacity-0 hover:opacity-100 hover:translate-y-0">Do the task</button>
+    <div className=" w-9/12 mx-auto h-full py-10">
+      <Sheet>
+        <SheetTrigger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {tags.map((tag, i) => (
+            <div
+              key={i}
+              className="flex justify-between max-w-96 bg-white shadow-md rounded-md h-32 cursor-pointer"
+            >
+              <p className="p-2 text-lg font-bold">{tag.tag}</p>
+              <img
+                src={tag.img}
+                className="w-32 h-32 object-cover rounded-r-md"
+                alt=""
+              />
             </div>
-        </div>
-        )
-        }
-      </div>
+          ))}
+        </SheetTrigger>
+        <SheetContent>
+          <SheetHeader>
+            <SheetTitle>Here is the task of this tag</SheetTitle>
+            {tasks.map((task, i) => (
+              <div
+                key={i}
+                className="relative group flex justify-center items-center border"
+              >
+                <img src={task.img} alt="" className="w-full h-44" />
+                <SheetDescription className="absolute bottom-0 left-0 bg-black bg-opacity-50 text-white p-4 w-full h-44">
+                  <div className="flex justify-center items-center h-full">
+                    <Button
+                      variant="secondary"
+                      className="text-black px-4 py-2 mt-2 transition duration-300 ease-in-out transform translate-y-full opacity-0 group-hover:opacity-100 group-hover:translate-y-0"
+                    >
+                      Do the task
+                    </Button>
+                  </div>
+                </SheetDescription>
+                <p className="text-lg text-center h-16 absolute w-full bg-gray-500 text-white bottom-0 font-semibold z-40 transition duration-300 ease-in-out opacity-100 group-hover:opacity-0">
+                  {task.task}
+                </p>
+              </div>
+            ))}
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };
