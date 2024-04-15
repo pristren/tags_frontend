@@ -80,7 +80,7 @@ const TagsCard = () => {
   ];
 
   return (
-    <div className=" w-9/12 mx-auto h-full py-10">
+    <div className="w-9/12 mx-auto h-screen py-10 flex justify-center items-center">
       <Sheet>
         <SheetTrigger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {tags.map((tag, i) => (
@@ -106,7 +106,7 @@ const TagsCard = () => {
                 className="relative group flex justify-center items-center border"
               >
                 <img src={task.img} alt="" className="w-full h-44" />
-                <SheetDescription className="absolute bottom-0 left-0 bg-black bg-opacity-50 text-white p-4 w-full h-44">
+                <SheetDescription className="absolute bottom-0 left-0 bg-black bg-opacity-15 group-hover:bg-opacity-50 transition duration-300 text-white p-4 w-full h-44">
                   <div className="flex justify-center items-center h-full">
                     <Button
                       variant="secondary"
@@ -116,7 +116,7 @@ const TagsCard = () => {
                     </Button>
                   </div>
                 </SheetDescription>
-                <p className="text-lg text-center h-16 absolute w-full bg-gray-500 text-white bottom-0 font-semibold z-40 transition duration-300 ease-in-out opacity-100 group-hover:opacity-0">
+                <p className="text-lg text-center h-10 absolute w-full bg-gray-500 text-white bottom-0 font-semibold z-40 transition duration-300 ease-in-out opacity-100 group-hover:opacity-0">
                   {task.task}
                 </p>
               </div>
