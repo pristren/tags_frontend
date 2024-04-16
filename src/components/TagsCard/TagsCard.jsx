@@ -46,7 +46,8 @@ const TagsCard = () => {
                     <div key={index} className="relative group w-full">
                       <img src={task.image} alt="" className="w-full h-44" />
                       <div className="absolute bottom-0 left-0 bg-black bg-opacity-15 group-hover:bg-opacity-50 transition duration-300 text-white p-4 w-full h-44">
-                        <Link to="/task-details" className="flex justify-center items-center h-full">
+                        {console.log(task)}
+                        <Link to={`/task-details/${task?._id}`} className="flex justify-center items-center h-full">
                           <Button
                             variant="secondary"
                             className="text-black px-4 py-2 mt-2 transition duration-300 ease-in-out transform translate-y-full opacity-0 group-hover:opacity-100 group-hover:translate-y-0"

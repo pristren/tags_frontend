@@ -7,6 +7,7 @@ import TaskCompletionParcent from "./components/TaskCompletionParcent/TaskComple
 import TaskDetails from "./components/TaskDetails/TaskDetails";
 import MainLayout from "./Layout/MainLayout";
 import SignUp from "./components/Authentication/Login/SignUp";
+import UsersTable from "./components/UsersTable/UsersTable";
 
 const App = () => {
   return (
@@ -17,10 +18,11 @@ const App = () => {
             <Route index element={<Login></Login>}></Route>
             <Route path="/login" element={<Login></Login>}></Route>
             <Route path="/signup" element={<SignUp></SignUp>}></Route>
+            <Route path="/all-users" element={<UsersTable></UsersTable>}></Route>
             <Route path="/tags" element={<Tags></Tags>}></Route>
             <Route path="/tags-card" element={<TagsCard></TagsCard>}></Route>
             <Route
-              path="/task-details"
+              path="/task-details/:id"
               element={<TaskDetails></TaskDetails>}
             ></Route>
             <Route

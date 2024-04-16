@@ -16,7 +16,9 @@ const Login = () => {
   const onSubmit = (data) => {
     axios.post(`http://localhost:5000/api/v1/user/email-login`, data)
       .then((res) => {
-        if (res.status === 201) {
+        if (res.status === 201 || res.status === 200) {
+          
+          localStorage.setItem("user", JSON.stringify(res.data));
           reset();
           navigate("/tags");
           toast.success("Login was Successful!");
@@ -30,16 +32,6 @@ const Login = () => {
 
   return (
     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-      {/* <Link
-          to={"/"}
-          className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
-        >
-          <img
-            className="h-14"
-            src="https://i.ibb.co/f0kJTdd/devpoint-logo.png"
-            alt="logo"
-          />
-        </Link> */}
       <div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 ">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl  text-center">
@@ -112,21 +104,21 @@ const Login = () => {
             {/* unique code */}
             <div>
               <label
-                htmlFor="uniqueCode"
+                htmlFor="phone"
                 className="block mb-2 text-sm font-medium text-gray-900 "
               >
-                Unique Code <span className="text-red-700">*</span>
+                Phone <span className="text-red-700">*</span>
               </label>
               <input
-                {...register("uniqueCode", { required: true })}
-                type="number"
-                name="uniqueCode"
-                id="uniqueCode"
-                placeholder="Write your Unique Code"
+                {...register("phone", { required: true })}
+                type="phone"
+                name="phone"
+                id="phone"
+                placeholder="Write your Phone number"
                 className="bg-gray-50 border border-gray-900 text-gray-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-none"
               />
               {errors.code?.type === "required" && (
-                <p className="text-sm text-red-600">Unique Code is Required!</p>
+                <p className="text-sm text-red-600">Phone Number is Required!</p>
               )}
             </div>
 
