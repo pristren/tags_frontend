@@ -1,288 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const TagsCard = () => {
-  const tags = [
-    {
-      tag: "confidence",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-      tasks: [
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Story Telling Adventure",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Silly Joke Show",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Speeches Galore",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "New Reporte Challenge",
-        },
-      ],
-    },
-    {
-      tag: "Leadership",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-      tasks: [
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Story Telling Adventure",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Silly Joke Show",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Speeches Galore",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "New Reporte Challenge",
-        },
-      ],
-    },
-    {
-      tag: "Empathy",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-      tasks: [
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Story Telling Adventure",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Silly Joke Show",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Speeches Galore",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "New Reporte Challenge",
-        },
-      ],
-    },
-    {
-      tag: "Problem Solving",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-      tasks: [
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Story Telling Adventure",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Silly Joke Show",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Speeches Galore",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "New Reporte Challenge",
-        },
-      ],
-    },
-    {
-      tag: "Curiosity",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-      tasks: [
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Story Telling Adventure",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Silly Joke Show",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Speeches Galore",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "New Reporte Challenge",
-        },
-      ],
-    },
-    {
-      tag: "Anger Management",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-      tasks: [
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Story Telling Adventure",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Silly Joke Show",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Speeches Galore",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "New Reporte Challenge",
-        },
-      ],
-    },
-    {
-      tag: "Communication",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-      tasks: [
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Story Telling Adventure",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Silly Joke Show",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Speeches Galore",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "New Reporte Challenge",
-        },
-      ],
-    },
-    {
-      tag: "Decision Making",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-      tasks: [
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Story Telling Adventure",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Silly Joke Show",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Speeches Galore",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "New Reporte Challenge",
-        },
-      ],
-    },
-    {
-      tag: "Growth Mindset",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-      tasks: [
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Story Telling Adventure",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Silly Joke Show",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Speeches Galore",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "New Reporte Challenge",
-        },
-      ],
-    },
-    {
-      tag: "Critical Thinking",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-      tasks: [
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Story Telling Adventure",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Silly Joke Show",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Speeches Galore",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "New Reporte Challenge",
-        },
-      ],
-    },
-    {
-      tag: "Adaptibility",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-      tasks: [
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Story Telling Adventure",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Silly Joke Show",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Speeches Galore",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "New Reporte Challenge",
-        },
-      ],
-    },
-    {
-      tag: "Conflict Resolution",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-      tasks: [
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Story Telling Adventure",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Silly Joke Show",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "Speeches Galore",
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s",
-          task: "New Reporte Challenge",
-        },
-      ],
-    },
-  ];
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/v1/tags");
+        setData(response.data.data);
+        console.log(response);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  console.log(data[0]?.tags);
   const [selectedTagIndex, setSelectedTagIndex] = useState(null);
 
   return (
     <div className="w-9/12 mx-auto h-full py-10">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {tags.map((tag, i) => (
+        {data[0]?.tags?.map((tag, i) => (
           <div key={i} className="relative">
             <div
               className="flex justify-between bg-white shadow-md rounded-md h-32 cursor-pointer"
               onClick={() => setSelectedTagIndex(i)}
             >
-              <p className="p-2 text-lg font-bold">{tag.tag}</p>
+              <p className="p-2 text-lg font-bold">{tag?.TagName}</p>
               <img
-                src={tag.img}
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s"
                 className="w-32 h-32 object-cover rounded-r-md"
                 alt=""
               />
@@ -291,9 +42,9 @@ const TagsCard = () => {
             {selectedTagIndex === i && (
               <div className="mt-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                  {tags[selectedTagIndex].tasks.map((task, index) => (
+                  {data[0]?.tags[selectedTagIndex]?.values.map((task, index) => (
                     <div key={index} className="relative group w-full">
-                      <img src={task.img} alt="" className="w-full h-44" />
+                      <img src={task.image} alt="" className="w-full h-44" />
                       <div className="absolute bottom-0 left-0 bg-black bg-opacity-15 group-hover:bg-opacity-50 transition duration-300 text-white p-4 w-full h-44">
                         <Link to="/task-details" className="flex justify-center items-center h-full">
                           <Button
@@ -305,7 +56,7 @@ const TagsCard = () => {
                         </Link>
                       </div>
                       <p className="text-lg text-center h-10 absolute w-full bg-gray-500 text-white bottom-0 font-semibold z-40 transition duration-300 ease-in-out opacity-100 group-hover:opacity-0">
-                        {task.task}
+                        {task.taskName}
                       </p>
                     </div>
                   ))}

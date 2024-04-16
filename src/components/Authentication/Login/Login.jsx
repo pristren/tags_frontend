@@ -9,18 +9,23 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
-    axios.post(`http://localhost:5000/api/v1/user/email-login`, data).then((res) => {
-      if (res.status === 200) {
-        // localStorage.setItem("userTags", JSON.stringify(res.data));
-        console.log(res);
-        navigate("/tags");
-        toast.success("Login was Successfull!");
-      }
-    });
+    axios.post(`http://localhost:5000/api/v1/user/email-login`, data)
+      .then((res) => {
+        if (res.status === 201) {
+          reset();
+          navigate("/tags");
+          toast.success("Login was Successful!");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        toast.error("An error occurred. Please try again.");
+      });
   };
 
   return (
