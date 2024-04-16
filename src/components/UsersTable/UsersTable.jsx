@@ -2,14 +2,8 @@ import axios from "axios";
 import { Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
+
+import { Link } from "react-router-dom";
 
 const UsersTable = () => {
   const [users, setUsers] = useState([]);
@@ -59,21 +53,7 @@ const UsersTable = () => {
                 <Trash className="size-7 mx-auto cursor-pointer" />
               </td>
               <td className="border border-gray-300 px-4 py-2 text-center">
-                <Dialog>
-                  <DialogTrigger>
-                    <Button>SUBMISSION</Button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Are you absolutely sure?</DialogTitle>
-                      <DialogDescription>
-                        This action cannot be undone. This will permanently
-                        delete your account and remove your data from our
-                        servers.
-                      </DialogDescription>
-                    </DialogHeader>
-                  </DialogContent>
-                </Dialog>
+                <Link to="/submitted-task"><Button>Submission</Button></Link>
               </td>
             </tr>
           ))}

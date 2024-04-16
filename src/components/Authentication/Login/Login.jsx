@@ -20,7 +20,7 @@ const Login = () => {
           
           localStorage.setItem("user", JSON.stringify(res.data));
           reset();
-          if(res.status === 201){
+          if(res.status === 200){
             navigate("/tags");
           }else{
             navigate('/tags-card')

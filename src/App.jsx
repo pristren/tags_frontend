@@ -8,6 +8,8 @@ import TaskDetails from "./components/TaskDetails/TaskDetails";
 import MainLayout from "./Layout/MainLayout";
 import SignUp from "./components/Authentication/Login/SignUp";
 import UsersTable from "./components/UsersTable/UsersTable";
+import PrivateRoute from "./routes/PrivateRoute";
+import SubmittedTask from "./components/SubmittedTask/SubmittedTask";
 
 const App = () => {
   return (
@@ -20,7 +22,10 @@ const App = () => {
             <Route path="/signup" element={<SignUp></SignUp>}></Route>
             <Route path="/all-users" element={<UsersTable></UsersTable>}></Route>
             <Route path="/tags" element={<Tags></Tags>}></Route>
-            <Route path="/tags-card" element={<TagsCard></TagsCard>}></Route>
+            <Route path="/submitted-task" element={<SubmittedTask></SubmittedTask>}></Route>
+            
+            <Route path="/tags-card" element={<PrivateRoute><TagsCard></TagsCard></PrivateRoute>}></Route>
+            
             <Route
               path="/task-details/:id"
               element={<TaskDetails></TaskDetails>}
