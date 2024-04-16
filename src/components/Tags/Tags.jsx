@@ -31,7 +31,7 @@ const Tags = () => {
             <div className="w-9/12 mx-auto">
                 <h2 className="text-center text-4xl font-bold">Select Tags</h2>
                 <p className="text-center text-gray-500 my-5">Select 12 tags so that we can personalize<br /> your experience</p>
-                <div className="flex flex-wrap gap-2 justify-center items-center w-1/2 mx-auto">
+                <div className="flex flex-wrap gap-2 justify-center items-center lg:w-1/2 mx-auto">
                     {tags.map((tag, index) => (
                         <button
                             key={index}

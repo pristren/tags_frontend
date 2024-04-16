@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 const TaskDetails = () => {
   return (
     <div className=" flex justify-center items-center h-screen text-center relative text-white">
-      <div className="w-9/12 mx-auto">
+      <div className="lg:w-9/12 mx-auto">
       <div className="absolute inset-0" style={{backgroundImage: 'url("https://i.ibb.co/9WTdd0b/download-18.jpg")', backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(50%)'}}>
       </div>
       <div className="relative z-10">
