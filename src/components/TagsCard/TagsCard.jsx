@@ -290,9 +290,6 @@ const TagsCard = () => {
             {/* Conditional rendering of tasks based on the selected tag */}
             {selectedTagIndex === i && (
               <div className="mt-8">
-                <h2 className="text-xl font-bold mb-4">
-                  Tasks for {tags[selectedTagIndex].tag}
-                </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {tags[selectedTagIndex].tasks.map((task, index) => (
                     <div key={index} className="relative group w-full">

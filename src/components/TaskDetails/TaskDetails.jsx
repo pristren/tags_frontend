@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 
 const TaskDetails = () => {
@@ -25,7 +26,8 @@ const TaskDetails = () => {
           Share your experience with us
         </h3>
         <input type="text" id="text" className="border border-white bg-transparent p-2 rounded-md mr-5 mt-10" />
-        <Button variant="secondary">Submit</Button>
+        <Link to="/tags-card">
+        <Button variant="secondary">Submit</Button></Link>
       </div>
     </div>
     </div>
