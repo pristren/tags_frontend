@@ -1,4 +1,4 @@
-import { FolderUp } from "lucide-react";
+import { Button } from "../ui/button";
 
 const TaskDetails = () => {
   return (
@@ -24,17 +24,8 @@ const TaskDetails = () => {
         <h3 className="text-2xl font-semibold">
           Share your experience with us
         </h3>
-        <label
-          htmlFor="file"
-        >
-          <div className="border border-dashed border-gray-300 p-5 w-1/2 mx-auto my-10 cursor-pointer">
-            <FolderUp className="w-20 h-20 mx-auto my-5" />
-            <p className="text-lg text-gray-200">
-              Upload a short video of you performing the <br /> task and talking about it
-            </p>
-          </div>
-        </label>
-        <input type="file" id="file" className="hidden" />
+        <input type="text" id="text" className="border border-white bg-transparent p-2 rounded-md mr-5 mt-10" />
+        <Button variant="secondary">Submit</Button>
       </div>
     </div>
     </div>

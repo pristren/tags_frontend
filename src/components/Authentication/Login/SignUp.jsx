@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
-const Login = () => {
+const SignUp = () => {
     const {
         register,
         handleSubmit,
@@ -106,4 +106,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignUp;
