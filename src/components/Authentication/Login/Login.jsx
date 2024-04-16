@@ -20,7 +20,11 @@ const Login = () => {
           
           localStorage.setItem("user", JSON.stringify(res.data));
           reset();
-          navigate("/tags");
+          if(res.status === 201){
+            navigate("/tags");
+          }else{
+            navigate('/tags-card')
+          }
           toast.success("Login was Successful!");
         }
       })
@@ -61,26 +65,7 @@ const Login = () => {
                 <p className="text-sm text-red-600">Email is Required!</p>
               )}
             </div>
-            {/* name */}
-            <div>
-              <label
-                htmlFor="name"
-                className="block mb-2 text-sm font-medium text-gray-900 "
-              >
-                Name <span className="text-red-700">*</span>
-              </label>
-              <input
-                {...register("name", { required: true })}
-                type="name"
-                name="name"
-                id="name"
-                placeholder="Write Your Name"
-                className="bg-gray-50 border border-gray-900 text-gray-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-none"
-              />
-              {errors.name?.type === "required" && (
-                <p className="text-sm text-red-600">Name is Required!</p>
-              )}
-            </div>
+            
             {/* password */}
             <div>
               <label
@@ -101,26 +86,7 @@ const Login = () => {
                 <p className="text-sm text-red-600">Password is Required!</p>
               )}
             </div>
-            {/* unique code */}
-            <div>
-              <label
-                htmlFor="phone"
-                className="block mb-2 text-sm font-medium text-gray-900 "
-              >
-                Phone <span className="text-red-700">*</span>
-              </label>
-              <input
-                {...register("phone", { required: true })}
-                type="phone"
-                name="phone"
-                id="phone"
-                placeholder="Write your Phone number"
-                className="bg-gray-50 border border-gray-900 text-gray-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-none"
-              />
-              {errors.code?.type === "required" && (
-                <p className="text-sm text-red-600">Phone Number is Required!</p>
-              )}
-            </div>
+            
 
             <input
               type="submit"
@@ -128,16 +94,6 @@ const Login = () => {
               value={"Login"}
             />
 
-            <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-              New Here?{" "}
-              {/* <Link
-                  to={"/signup"}
-                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                >
-                  SignUp
-                </Link> */}
-              <Link to="/signup">SignUp</Link>
-            </p>
           </form>
         </div>
       </div>

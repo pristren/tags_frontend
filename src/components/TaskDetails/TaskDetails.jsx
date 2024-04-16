@@ -5,18 +5,19 @@ import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 
 const TaskDetails = () => {
-  const navigate = useNavigate();
+  const { id } = useParams();
+  const [data, setData] = useState({});
   const [text, setText] = useState("");
-  const {id} = useParams();
-  console.log(id);
-  const [data, setData] = useState({})
-  console.log(data);
+  const userInfo = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/v1/tasks/task/${id}`);
+        const response = await axios.get(
+          `http://localhost:5000/api/v1/tasks/task/${id}`
+        );
+
         setData(response.data.data);
-        console.log(response);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -31,15 +32,28 @@ const TaskDetails = () => {
       return;
     }
 
-    const data = {
+    const userData = {
+      name: userInfo.name,
+      email: userInfo.email,
+      phone: userInfo.phone,
+    };
+
+    const taskData = {
+      taskName: data.taskName,
+      taskDescription: data.taskDescription,
+    };
+
+    const postData = {
+      task: taskData,
+      user: userData,
       text: text.trim(),
     };
 
     axios
-      .post(`http://localhost:5000/api/v1/tasks/submit`, data)
+      .post(`http://localhost:5000/api/v1/tasks/submit`, postData)
       .then((res) => {
         if (res.status === 201 || res.status === 200) {
-          localStorage.setItem("user", JSON.stringify(res.data));
+          setText("");
           navigate("/tags-card");
           toast.success("Text submitted successfully!");
         }
@@ -51,44 +65,43 @@ const TaskDetails = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen text-center relative text-white">
+    <div className="flex justify-center items-center h-screen text-center relative text-black">
       <div className="lg:w-9/12 mx-auto">
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: 'url("https://i.ibb.co/9WTdd0b/download-18.jpg")',
+            backgroundImage: `url(${
+              data?.image || "https://i.ibb.co/9WTdd0b/download-18.jpg"
+            })`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             filter: "brightness(30%)",
           }}
         ></div>
+        <div className="absolute inset-0 bg-white opacity-30"></div>
         <div className="relative z-10">
           <h2 className="text-3xl font-bold text-center mb-16">
-            Storytelling Adventure
+            {data.taskName}
           </h2>
-          <p className="text-gray-200 text-center mx-auto w-1/2 mb-10">
-            Are you ready to embark on a magical journey through your
-            imagination? Your mission, should you choose to accept it, is to
-            weave together a tale that will dazzle and delight all who hear it.
+          <p className="text-black text-center mx-auto w-1/2 mb-10">
+            {data.taskDescription}
           </p>
-          <p className="text-gray-200 text-center mx-auto w-1/2">
-            Unleash your storytelling superpowers and share a tale that will
-            leave everyone enchanted? The world is waiting to be captivated by
-            your imagination!
-          </p>
-          <div className="border border-gray-200 w-full my-16"></div>
+          <div className="border border-black max-w-xl my-16 mx-auto"></div>
           <h3 className="text-2xl font-semibold">
             Share your experience with us
           </h3>
-          <div className="flex flex-col gap-2 items-center justify-center w-[320px] mx-auto">
+          <p className="text-black mt-5">
+            Upload a short video of you performing the task and <br /> talking about it
+          </p>
+          <div className="flex flex-col gap-2 items-end justify-end w-[320px] mx-auto">
             <textarea
               type="text"
               id="text"
-              className="border border-white bg-transparent rounded-md mt-10 w-full"
+              className="border border-black bg-transparent rounded-md mt-10 w-full p-2 min-h-32"
               value={text}
               onChange={(e) => setText(e.target.value)}
             />
-            <Button variant="secondary" onClick={handleSubmit}>
+            <Button className="w-full" onClick={handleSubmit}>
               Submit
             </Button>
           </div>

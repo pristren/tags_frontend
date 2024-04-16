@@ -23,7 +23,7 @@ const TagsCard = () => {
   const [selectedTagIndex, setSelectedTagIndex] = useState(null);
 
   return (
-    <div className="w-9/12 mx-auto h-full py-10">
+    <div className="w-9/12 mx-auto h-full py-10 ">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {data[0]?.tags?.map((tag, i) => (
           <div key={i} className="relative">
@@ -31,7 +31,7 @@ const TagsCard = () => {
               className="flex justify-between bg-white shadow-md rounded-md h-32 cursor-pointer"
               onClick={() => setSelectedTagIndex(i)}
             >
-              <p className="p-2 text-lg font-bold">{tag?.TagName}</p>
+              <p className="p-4 text-lg font-bold">{tag?.TagName}</p>
               <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s"
                 className="w-32 h-32 object-cover rounded-r-md"
@@ -46,7 +46,6 @@ const TagsCard = () => {
                     <div key={index} className="relative group w-full">
                       <img src={task.image} alt="" className="w-full h-44" />
                       <div className="absolute bottom-0 left-0 bg-black bg-opacity-15 group-hover:bg-opacity-50 transition duration-300 text-white p-4 w-full h-44">
-                        {console.log(task)}
                         <Link to={`/task-details/${task?._id}`} className="flex justify-center items-center h-full">
                           <Button
                             variant="secondary"
