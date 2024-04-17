@@ -1,4 +1,4 @@
-import { Infinity } from "lucide-react";
+import { Infinity, Tally3 } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Sheet,
@@ -8,13 +8,11 @@ import {
   SheetTrigger,
 } from "../ui/sheet";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 
@@ -24,56 +22,54 @@ const Navbar = () => {
   const { user } = useAuth();
   const handleLogout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("userTags");
     navigate("/login");
   };
-  const [open, setOpen] = useState(false);
+  // console.log(user);
+  // const [open, setOpen] = useState(false);
   return (
-    <div className="flex justify-between items-center w-9/12 mx-auto py-5">
+    <div className="flex justify-between items-center w-full px-5 md:px-0 md:w-9/12 mx-auto py-5">
       <Link to="/" className="flex items-center gap-2 cursor-pointer">
         <Infinity className="size-8" />
         <h2 className="text-2xl font-semibold font-mono">Elevate</h2>
       </Link>
-      <div className="hidden lg:flex items-center gap-5 ">
-        <Link to="/complete-task">
-          <Button className="px-4 w-full">My Progress</Button>
-        </Link>
-        <Link to="/tags-card">
-          <Button className="px-4 w-full">My Tasks</Button>
-        </Link>
+      <div className="hidden md:flex items-center ">
         {userInfo ? (
-          <div className="relative">
+          <div className="relative flex gap-5 ">
+            <Link to="/complete-task">
+              <Button className="px-4 w-full">My Progress</Button>
+            </Link>
+            <Link to="/tags-card">
+              <Button className="px-4 w-full">My Tasks</Button>
+            </Link>
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <img
-                  onClick={() => setOpen(!open)}
-                  src="https://i.ibb.co/9WTdd0b/download-18.jpg"
-                  className="w-10 h-10 rounded-full cursor-pointer"
-                  alt=""
-                />
+                <div className="border border-gray-300 rounded-full cursor-pointer  h-10 w-10">
+                  <img
+                    src="https://github.com/shadcn.png "
+                    alt=""
+                    className="w-full h-full rounded-full"
+                  />
+                </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuSeparator />
+                {user?.role === "admin" && (
+                  <DropdownMenuItem className="w-full   text-center cursor-pointer font-semibold">
+                    <Link to="/all-users">All Users</Link>
+                  </DropdownMenuItem>
+                )}
+                {/* <DropdownMenuSeparator /> */}
                 <DropdownMenuItem
-                    className="w-full mb-2 text-center cursor-pointer font-semibold"
-                    onClick={handleLogout}>
-
-                    Logout
-                </DropdownMenuItem>
-                  {user?.role === "admin" && (
-                <DropdownMenuItem                     className="w-full mb-2 text-center cursor-pointer font-semibold"
+                  className="w-full  text-center cursor-pointer font-semibold"
+                  onClick={handleLogout}
                 >
-                    <Link to="/all-users">
-                        All Users
-                    </Link>
+                  Logout
                 </DropdownMenuItem>
-                  )}
               </DropdownMenuContent>
             </DropdownMenu>
 
             <div
-              className={`shadow-md rounded-md py-2 px-3 absolute z-[999] ${
-                open ? "" : "hidden"
-              }`}
+              className={`shadow-md rounded-md py-2 px-3 absolute z-[999] `}
             ></div>
           </div>
         ) : (
@@ -85,33 +81,44 @@ const Navbar = () => {
       <div className="md:hidden">
         <Sheet>
           <SheetTrigger>
-            <img
-              src="https://i.ibb.co/9WTdd0b/download-18.jpg"
-              className="w-10 h-10 rounded-full cursor-pointer"
-              alt=""
-            />
+            <Tally3 className="rotate-90" />
           </SheetTrigger>
           <SheetContent>
-            <SheetHeader>
-              <SheetDescription>
-                <Link to="/complete-task">
-                  <Button className="px-4 w-full">My Progress</Button>
-                </Link>
-              </SheetDescription>
-              <SheetDescription>
-                <Link to="/tags-card">
-                  <Button className="px-4 w-full">My Tasks</Button>
-                </Link>
-              </SheetDescription>
-              <SheetDescription>
-                <Button className="px-4 w-full">LogOut</Button>
-              </SheetDescription>
-              {user?.role === "admin" && (
+            {userInfo ? (
+              <SheetHeader className="pt-4">
                 <SheetDescription>
-                  <Button className="px-4 w-full">All Users</Button>
+                  <Link to="/complete-task">
+                    <Button className="px-4 w-full">My Progress</Button>
+                  </Link>
                 </SheetDescription>
-              )}
-            </SheetHeader>
+                <SheetDescription>
+                  <Link to="/">
+                    <Button className="px-4 w-full">My Tasks</Button>
+                  </Link>
+                </SheetDescription>
+
+                {user?.role === "admin" && (
+                  <SheetDescription>
+                    <Link to="/all-users">
+                      <Button className="px-4 w-full">All Users</Button>
+                    </Link>
+                  </SheetDescription>
+                )}
+                <SheetDescription>
+                  <Button className="px-4 w-full" onClick={handleLogout}>
+                    LogOut
+                  </Button>
+                </SheetDescription>
+              </SheetHeader>
+            ) : (
+              <SheetHeader className="pt-4">
+                <SheetDescription>
+                  <Link to="/login">
+                    <Button className="px-4 w-full">Login</Button>
+                  </Link>
+                </SheetDescription>
+              </SheetHeader>
+            )}
           </SheetContent>
         </Sheet>
       </div>

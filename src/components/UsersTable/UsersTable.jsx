@@ -1,13 +1,13 @@
 import axios from "axios";
-import { Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 
 import { Link } from "react-router-dom";
+// import { Trash } from "lucide-react";
 
 const UsersTable = () => {
   const [users, setUsers] = useState([]);
-  console.log(users);
+  // console.log(users);
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -29,7 +29,7 @@ const UsersTable = () => {
             <th className="border border-gray-300 px-4 py-2">Email</th>
             <th className="border border-gray-300 px-4 py-2">Phone</th>
             <th className="border border-gray-300 px-4 py-2">Unique Code</th>
-            <th className="border border-gray-300 px-4 py-2">Delete</th>
+            {/* <th className="border border-gray-300 px-4 py-2">Delete</th> */}
             <th className="border border-gray-300 px-4 py-2">Submission</th>
           </tr>
         </thead>
@@ -37,23 +37,25 @@ const UsersTable = () => {
           {users.map((user, i) => (
             <tr key={i}>
               <td className="border border-gray-300 px-4 py-2 text-center">
-                {user.name}
+                {user?.name}
               </td>
               <td className="border border-gray-300 px-4 py-2 text-center">
-                {user.email}
+                {user?.email}
               </td>
               <td className="border border-gray-300 px-4 py-2 text-center">
-                {user.phone}
+                {user?.phone}
               </td>
 
               <td className="border border-gray-300 px-4 py-2 text-center">
-                01
+                {user?.uniqueCode}
               </td>
-              <td className="border border-gray-300 px-4 py-2">
+              {/* <td className="border border-gray-300 px-4 py-2">
                 <Trash className="size-7 mx-auto cursor-pointer" />
-              </td>
+              </td> */}
               <td className="border border-gray-300 px-4 py-2 text-center">
-                <Link to="/submitted-task"><Button>Submission</Button></Link>
+                <Link to={`/submitted-task?query=${user?.email}`}>
+                  <Button>Submission</Button>
+                </Link>
               </td>
             </tr>
           ))}
