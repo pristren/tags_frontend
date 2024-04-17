@@ -17,12 +17,10 @@ const TaskCompletionParcent = () => {
           const response = await axios.get(
             `http://localhost:5000/api/v1/tasks/user/${userInfo?.email}`
           );
-          // setUserData(response.data.data);
-          const completedTasks = response.data.data.filter(
-            (task) => task.status === "completed"
-          );
-          const percentage =
-            (completedTasks.length / response.data.data.length) * 100;
+          // console.log(response.data);
+          const totalTasks = 48; // Total number of tasks
+          const submittedTasks = response.data.length; // Number of submitted tasks
+          const percentage = (submittedTasks / totalTasks) * 100;
           setCompletionPercentage(percentage);
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -33,7 +31,7 @@ const TaskCompletionParcent = () => {
     }
   }, [userInfo]);
   return (
-    <div className="w-9/12 mx-auto text-center flex flex-col justify-center items-center h-screen gap-10">
+    <div className="w-9/12 mx-auto text-center flex flex-col justify-center items-center   gap-10">
       <h1 className="bg-black text-white text-8xl font-semibold w-80 h-80 flex justify-center items-center rounded-full p-5 mx-auto">
         {completionPercentage?.toFixed(2)}%
       </h1>
@@ -43,7 +41,7 @@ const TaskCompletionParcent = () => {
         to success is <br /> remarkable
       </p>
       <Link to="/tags-card">
-        <Button className="px-10 uppercase my-10">Visit Your Task Board</Button>
+        <Button className="px-10 uppercase mb-10">Visit Your Task Board</Button>
       </Link>
     </div>
   );

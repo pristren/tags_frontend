@@ -10,6 +10,7 @@ import SignUp from "./components/Authentication/Login/SignUp";
 import UsersTable from "./components/UsersTable/UsersTable";
 import PrivateRoute from "./routes/PrivateRoute";
 import SubmittedTask from "./components/SubmittedTask/SubmittedTask";
+import AdminRoute from "./routes/AdminRoute";
 
 const App = () => {
   return (
@@ -31,7 +32,9 @@ const App = () => {
               path="/all-users"
               element={
                 <PrivateRoute>
-                  <UsersTable></UsersTable>
+                  <AdminRoute>
+                    <UsersTable></UsersTable>
+                  </AdminRoute>
                 </PrivateRoute>
               }
             ></Route>
@@ -74,7 +77,11 @@ const App = () => {
             ></Route>
             <Route
               path="/complete-task"
-              element={<TaskCompletionParcent></TaskCompletionParcent>}
+              element={
+                <PrivateRoute>
+                  <TaskCompletionParcent></TaskCompletionParcent>
+                </PrivateRoute>
+              }
             ></Route>
           </Route>
         </Routes>
