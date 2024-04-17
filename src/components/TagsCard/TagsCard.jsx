@@ -1,4 +1,5 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 // import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
 // import axios from "axios";
@@ -27,6 +28,33 @@ const TagsCard = () => {
   // }, []);
   // console.log(data[0]?.tags);
   const [selectedTagIndex, setSelectedTagIndex] = useState(null);
+  const [alreadySubmitted, setAlreadySubmitted] = useState([]);
+
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("user"));
+    if (userInfo) {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:5000/api/v1/tasks/user/${userInfo?.email}`
+          );
+          const submittedTasks = response.data.map((task) => {
+            return {
+              taskName: task.task.taskName,
+              taskDescription: task.task.taskDescription,
+              tagName: task.tagName,
+            };
+          });
+          // console.log(submittedTasks);
+          setAlreadySubmitted(submittedTasks);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+
+      fetchData();
+    }
+  }, []);
 
   const navigate = useNavigate();
 
@@ -52,9 +80,28 @@ const TagsCard = () => {
                 <div className="grid grid-cols-2 md:grid-cols-2 gap-2">
                   {userTag[selectedTagIndex]?.values.map((task, index) => (
                     <div
-                      onClick={() => navigate(`/task-details/${task?._id}`)}
+                      onClick={() => {
+                        alreadySubmitted.find(
+                          (submittedTask) =>
+                            submittedTask.tagName === tag?.TagName &&
+                            submittedTask.taskName === task.taskName
+                        )
+                          ? null
+                          : navigate(`/task-details/${task?._id}`);
+                      }}
                       key={index}
-                      className="relative group w-full cursor-pointer"
+                      className={`relative group w-full 
+                      ${
+                        alreadySubmitted.find(
+                          (submittedTask) =>
+                            submittedTask.tagName === tag?.TagName &&
+                            submittedTask.taskName === task.taskName
+                        )
+                          ? "opacity-50 "
+                          : "cursor-pointer"
+                      }
+                      
+                      `}
                     >
                       {console.log(task)}
                       {/* <img

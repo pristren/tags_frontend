@@ -17,7 +17,7 @@ const TaskDetails = () => {
           const response = await axios.get(
             `http://localhost:5000/api/v1/tasks/task/${id}`
           );
-
+          // console.log(response.data);
           setData(response.data.data);
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -51,6 +51,7 @@ const TaskDetails = () => {
     const postData = {
       task: taskData,
       user: userData,
+      tagName: data.tagName,
       text: text.trim(),
     };
 
