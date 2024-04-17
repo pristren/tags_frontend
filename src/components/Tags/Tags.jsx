@@ -9,7 +9,7 @@ const Tags = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
   const uniqueCode = user?.uniqueCode?.slice(0, 2);
-  console.log(uniqueCode);
+  // console.log(uniqueCode);
   const [data, setUserData] = useState({});
   // console.log(data);
   useEffect(() => {

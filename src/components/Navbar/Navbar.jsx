@@ -22,7 +22,7 @@ const Navbar = () => {
   const { user } = useAuth();
   const handleLogout = () => {
     localStorage.removeItem("user");
-    localStorage.removeItem("userTags");
+    // localStorage.removeItem("userTags");
     navigate("/login");
   };
   // console.log(user);
