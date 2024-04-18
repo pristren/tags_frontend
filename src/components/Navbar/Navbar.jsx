@@ -34,12 +34,12 @@ const Navbar = () => {
         <h2 className="text-2xl font-semibold font-mono">Elevate</h2>
       </Link>
       <div className="hidden lg:flex items-center gap-5 ">
-        <Link to="/complete-task">
+        {userInfo && <><Link to="/complete-task">
           <Button className="px-4 w-full">My Progress</Button>
         </Link>
         <Link to="/tags-card">
           <Button className="px-4 w-full">My Tasks</Button>
-        </Link>
+        </Link></>}
         {userInfo ? (
           <div className="relative">
             <DropdownMenu>
@@ -83,7 +83,8 @@ const Navbar = () => {
         )}
       </div>
       <div className="md:hidden">
-        <Sheet>
+        {
+          userInfo ? <Sheet>
           <SheetTrigger>
             <img
               src="https://i.ibb.co/9WTdd0b/download-18.jpg"
@@ -113,7 +114,10 @@ const Navbar = () => {
               )}
             </SheetHeader>
           </SheetContent>
-        </Sheet>
+        </Sheet> : <Link to="/login">
+            <Button className="px-4 w-full">Login</Button>
+          </Link>
+        }
       </div>
     </div>
   );
