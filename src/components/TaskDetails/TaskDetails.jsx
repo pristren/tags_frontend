@@ -3,21 +3,26 @@ import { Button } from "../ui/button";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
+import Loader from "../loader/Loader";
 
 const TaskDetails = () => {
   const { id } = useParams();
   const [data, setData] = useState({});
   const [text, setText] = useState("");
   const userInfo = JSON.parse(localStorage.getItem("user"));
+  const [alreadySubmitted, setAlreadySubmitted] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
+    setLoading(true)
     if (id) {
       const fetchData = async () => {
         try {
           const response = await axios.get(
             `http://localhost:5000/api/v1/tasks/task/${id}`
           );
-          // console.log(response.data);
+          console.log(response);
+          setLoading(false)
           setData(response.data.data);
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -29,6 +34,7 @@ const TaskDetails = () => {
   }, [id]);
 
   const handleSubmit = () => {
+    setLoading(true)
     if (text.trim() === "") {
       toast.error("Please enter some text before submitting.");
       return;
@@ -41,12 +47,13 @@ const TaskDetails = () => {
       uniqueCode: userInfo.uniqueCode,
     };
 
-    // console.log(userData);
 
     const taskData = {
+      taskId: id,
       taskName: data.taskName,
       taskDescription: data.taskDescription,
     };
+
 
     const postData = {
       task: taskData,
@@ -58,17 +65,48 @@ const TaskDetails = () => {
     axios
       .post(`http://localhost:5000/api/v1/tasks/submit`, postData)
       .then((res) => {
-        if (res.status === 201 || res.status === 200) {
+        if (res.status === 201) {
           setText("");
           navigate("/");
           toast.success("Text submitted successfully!");
+          setLoading(false)
         }
       })
-      .catch((error) => {
-        console.error("Error:", error);
+      .catch(() => {
+        setLoading(false)
         toast.error("An error occurred. Please try again.");
       });
   };
+
+  useEffect(() => {
+    setLoading(true)
+    const userInfo = JSON.parse(localStorage.getItem("user"));
+    if (userInfo) {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:5000/api/v1/tasks/submit/${id}`
+          );
+          const submittedTasks = {
+            taskName: response.data.task.taskName,
+            taskDescription: response.data.task.taskDescription,
+            tagName: response.data.tagName,
+          };
+          setAlreadySubmitted(submittedTasks);
+          setLoading(false)
+        } catch (error) {
+          setLoading(false)
+        }
+      };
+
+      fetchData();
+    }
+  }, []);
+
+  if(loading){
+    return <Loader />
+  }
+
 
   return (
     <div className="flex justify-center items-center min-h-screen lg:min-h-[90vh] text-center relative text-black">
@@ -108,7 +146,7 @@ const TaskDetails = () => {
               value={text}
               onChange={(e) => setText(e.target.value)}
             />
-            <Button className="w-full" onClick={handleSubmit}>
+            <Button className="w-full" disabled={alreadySubmitted.tagName === data.tagName && alreadySubmitted.taskDescription === data.taskDescription && alreadySubmitted.taskName === data.taskName} onClick={handleSubmit}>
               Submit
             </Button>
           </div>

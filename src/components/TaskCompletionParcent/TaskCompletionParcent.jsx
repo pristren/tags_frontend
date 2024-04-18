@@ -8,7 +8,8 @@ const TaskCompletionParcent = () => {
   const userInfo = JSON.parse(localStorage.getItem("user"));
   // const [userData, setUserData] = useState([]);
   const [completionPercentage, setCompletionPercentage] = useState(0);
-  // console.log(userData);
+  const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     if (userInfo) {
@@ -24,6 +25,8 @@ const TaskCompletionParcent = () => {
           setCompletionPercentage(percentage);
         } catch (error) {
           console.error("Error fetching data:", error);
+        }finally{
+          setLoading(false)
         }
       };
 
@@ -33,7 +36,12 @@ const TaskCompletionParcent = () => {
   return (
     <div className="w-9/12 mx-auto text-center flex flex-col justify-center items-center   gap-10">
       <h1 className="bg-black text-white text-8xl font-semibold w-80 h-80 flex justify-center items-center rounded-full p-5 mx-auto">
-        {completionPercentage?.toFixed(2)}%
+        {loading ? <l-line-spinner
+          size="50"
+          stroke="3"
+          speed="1"
+          color="white"
+        ></l-line-spinner> : completionPercentage?.toFixed(2) + "%"}
       </h1>
 
       <p>

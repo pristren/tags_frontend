@@ -3,9 +3,11 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false)
   const {
     register,
     handleSubmit,
@@ -14,6 +16,7 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = (data) => {
+    setLoading(true)
     axios
       .post(`http://localhost:5000/api/v1/user/email-login`, data)
       .then((res) => {
@@ -26,10 +29,11 @@ const Login = () => {
             navigate("/tags");
           }
           toast.success("Login was Successful!");
+          setLoading(false)
         }
       })
       .catch((error) => {
-        console.error("Error:", error);
+        setLoading(false)
         toast.error("An error occurred. Please try again.");
       });
   };
@@ -86,12 +90,15 @@ const Login = () => {
                 <p className="text-sm text-red-600">Password is Required!</p>
               )}
             </div>
-
-            <input
-              type="submit"
-              className="w-full cursor-pointer text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 "
-              value={"Login"}
-            />
+            <button type="submit"
+              className="w-full cursor-pointer text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 ">
+              {loading ? <l-line-spinner
+          size="20"
+          stroke="3"
+          speed="1"
+          color="white"
+        ></l-line-spinner> : "Login"}
+            </button>
           </form>
         </div>
       </div>
