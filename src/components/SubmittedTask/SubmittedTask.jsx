@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Loader from "../loader/Loader";
 
 const SubmittedTask = () => {
   const [data, setData] = useState([]);
-  // console.log(data);
-  // get the query parameter from the URL
+  const [loading, setLoading] = useState(false);
   const query = new URLSearchParams(location.search).get("query");
   // console.log(query);
 
@@ -15,6 +15,7 @@ const SubmittedTask = () => {
   // const [completionPercentage, setCompletionPercentage] = useState(0);
 
   useEffect(() => {
+    setLoading(true)
     if (query) {
       const getUserSubmissionsByEmail = async () => {
         try {
@@ -27,6 +28,8 @@ const SubmittedTask = () => {
             setData([]);
             setNoData("No submissions found");
           }
+        }finally{
+          setLoading(false)
         }
       };
 
@@ -39,6 +42,8 @@ const SubmittedTask = () => {
           setUserDt(response.data);
         } catch (error) {
           // do something, take it for later.
+        } finally{
+          setLoading(false)
         }
       };
 
@@ -60,11 +65,12 @@ const SubmittedTask = () => {
       // };
 
       getUserInfo();
-
-      // completedPercentage();
       getUserSubmissionsByEmail();
     }
   }, [query]);
+  if(loading){
+    return <Loader />
+  }
   return (
     <div className="w-full px-5 md:px-0 md:w-9/12 mx-auto min-h-screen ">
       {query && (

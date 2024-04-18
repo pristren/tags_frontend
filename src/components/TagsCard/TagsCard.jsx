@@ -2,12 +2,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 // import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
+import Loader from "../loader/Loader";
 // import axios from "axios";
 
 const TagsCard = () => {
   // const [data, setData] = useState([]);
 
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const userTag = JSON.parse(localStorage.getItem("userTags"));
 
@@ -31,6 +32,7 @@ const TagsCard = () => {
   const [alreadySubmitted, setAlreadySubmitted] = useState([]);
 
   useEffect(() => {
+    setLoading(true)
     const userInfo = JSON.parse(localStorage.getItem("user"));
     if (userInfo) {
       const fetchData = async () => {
@@ -43,11 +45,13 @@ const TagsCard = () => {
               taskName: task.task.taskName,
               taskDescription: task.task.taskDescription,
               tagName: task.tagName,
+              image: task.image
             };
           });
-          // console.log(submittedTasks);
+          setLoading(false)
           setAlreadySubmitted(submittedTasks);
         } catch (error) {
+          setLoading(false)
           console.error("Error fetching data:", error);
         }
       };
@@ -57,7 +61,9 @@ const TagsCard = () => {
   }, []);
 
   const navigate = useNavigate();
-
+  if(loading){
+    return <Loader />
+  }
   return (
     <div className=" w-full px-5 md:px-0 md:w-9/12 mx-auto h-full py-10 ">
       <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-5">
@@ -69,7 +75,7 @@ const TagsCard = () => {
             >
               <p className="p-4 text-lg font-bold">{tag?.TagName}</p>
               <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCeVhPcF0B061dWx6Y2p6ZshztnAoVQI59g&s"
+                src={tag?.image}
                 className="w-32 h-32 object-cover rounded-r-md"
                 alt=""
               />
@@ -103,12 +109,6 @@ const TagsCard = () => {
                       
                       `}
                     >
-                      {console.log(task)}
-                      {/* <img
-                        src={task.image}
-                        alt=""
-                        className="w-full h-min bg-cover"
-                      /> */}
 
                       <div
                         className=""
