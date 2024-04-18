@@ -14,16 +14,16 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    axios.post(`http://localhost:5000/api/v1/user/email-login`, data)
+    axios
+      .post(`http://localhost:5000/api/v1/user/email-login`, data)
       .then((res) => {
         if (res.status === 201 || res.status === 200) {
-          
           localStorage.setItem("user", JSON.stringify(res.data));
           reset();
-          if(res.status === 200){
+          if (res.status === 201) {
+            navigate("/");
+          } else {
             navigate("/tags");
-          }else{
-            navigate('/tags-card')
           }
           toast.success("Login was Successful!");
         }
@@ -65,7 +65,7 @@ const Login = () => {
                 <p className="text-sm text-red-600">Email is Required!</p>
               )}
             </div>
-            
+
             {/* password */}
             <div>
               <label
@@ -86,14 +86,12 @@ const Login = () => {
                 <p className="text-sm text-red-600">Password is Required!</p>
               )}
             </div>
-            
 
             <input
               type="submit"
               className="w-full cursor-pointer text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 "
               value={"Login"}
             />
-
           </form>
         </div>
       </div>

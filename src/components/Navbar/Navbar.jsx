@@ -34,12 +34,16 @@ const Navbar = () => {
         <h2 className="text-2xl font-semibold font-mono">Elevate</h2>
       </Link>
       <div className="hidden lg:flex items-center gap-5 ">
-        {userInfo && <><Link to="/complete-task">
-          <Button className="px-4 w-full">My Progress</Button>
-        </Link>
-        <Link to="/tags-card">
-          <Button className="px-4 w-full">My Tasks</Button>
-        </Link></>}
+        {userInfo && (
+          <>
+            <Link to="/complete-task">
+              <Button className="px-4 w-full">My Progress</Button>
+            </Link>
+            <Link to="/tags-card">
+              <Button className="px-4 w-full">My Tasks</Button>
+            </Link>
+          </>
+        )}
         {userInfo ? (
           <div className="relative">
             <DropdownMenu>
@@ -54,19 +58,16 @@ const Navbar = () => {
               <DropdownMenuContent>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                    className="w-full mb-2 text-center cursor-pointer font-semibold"
-                    onClick={handleLogout}>
-
-                    Logout
-                </DropdownMenuItem>
-                  {user?.role === "admin" && (
-                <DropdownMenuItem                     className="w-full mb-2 text-center cursor-pointer font-semibold"
+                  className="w-full mb-2 text-center cursor-pointer font-semibold"
+                  onClick={handleLogout}
                 >
-                    <Link to="/all-users">
-                        All Users
-                    </Link>
+                  Logout
                 </DropdownMenuItem>
-                  )}
+                {user?.role === "admin" && (
+                  <DropdownMenuItem className="w-full mb-2 text-center cursor-pointer font-semibold">
+                    <Link to="/all-users">All Users</Link>
+                  </DropdownMenuItem>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
 
@@ -83,41 +84,47 @@ const Navbar = () => {
         )}
       </div>
       <div className="md:hidden">
-        {
-          userInfo ? <Sheet>
-          <SheetTrigger>
-            <img
-              src="https://i.ibb.co/9WTdd0b/download-18.jpg"
-              className="w-10 h-10 rounded-full cursor-pointer"
-              alt=""
-            />
-          </SheetTrigger>
-          <SheetContent>
-            <SheetHeader>
-              <SheetDescription>
-                <Link to="/complete-task">
-                  <Button className="px-4 w-full">My Progress</Button>
-                </Link>
-              </SheetDescription>
-              <SheetDescription>
-                <Link to="/tags-card">
-                  <Button className="px-4 w-full">My Tasks</Button>
-                </Link>
-              </SheetDescription>
-              <SheetDescription>
-                <Button className="px-4 w-full">LogOut</Button>
-              </SheetDescription>
-              {user?.role === "admin" && (
+        {userInfo ? (
+          <Sheet>
+            <SheetTrigger>
+              <img
+                src="https://i.ibb.co/9WTdd0b/download-18.jpg"
+                className="w-10 h-10 rounded-full cursor-pointer"
+                alt=""
+              />
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
                 <SheetDescription>
-                  <Button className="px-4 w-full">All Users</Button>
+                  <Link to="/complete-task">
+                    <Button className="px-4 w-full">My Progress</Button>
+                  </Link>
                 </SheetDescription>
-              )}
-            </SheetHeader>
-          </SheetContent>
-        </Sheet> : <Link to="/login">
+                <SheetDescription>
+                  <Link to="/tags-card">
+                    <Button className="px-4 w-full">My Tasks</Button>
+                  </Link>
+                </SheetDescription>
+                <SheetDescription>
+                  <Button className="px-4 w-full" onClick={handleLogout}>
+                    LogOut
+                  </Button>
+                </SheetDescription>
+                {user?.role === "admin" && (
+                  <SheetDescription>
+                    <Link to="/all-users">
+                      <Button className="px-4 w-full">All Users</Button>
+                    </Link>
+                  </SheetDescription>
+                )}
+              </SheetHeader>
+            </SheetContent>
+          </Sheet>
+        ) : (
+          <Link to="/login">
             <Button className="px-4 w-full">Login</Button>
           </Link>
-        }
+        )}
       </div>
     </div>
   );
