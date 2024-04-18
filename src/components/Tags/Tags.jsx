@@ -17,7 +17,7 @@ const Tags = () => {
       const getUserByEmail = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/v1/user/${user?.email}`
+            `${import.meta.env.VITE_SERVER_URL}/api/v1/user/${user?.email}`
           );
           setUserData(response.data);
         } catch (error) {
@@ -34,7 +34,7 @@ const Tags = () => {
       const fetchTags = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/v1/tags/${uniqueCode}`
+            `${import.meta.env.VITE_SERVER_URL}/api/v1/tags/${uniqueCode}`
           );
           // console.log(response?.data);
           setTags(response?.data?.data?.tags);
@@ -58,9 +58,12 @@ const Tags = () => {
   const updateUserTagsShow = async () => {
     try {
       localStorage.setItem("userTags", JSON.stringify(selectedTags));
-      await axios.put(`http://localhost:5000/api/v1/user/u/${data?._id}`, {
-        tagsShow: false,
-      });
+      await axios.put(
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/user/u/${data?._id}`,
+        {
+          tagsShow: false,
+        }
+      );
       navigate("/");
     } catch (error) {
       console.error("Error updating user tagsShow:", error);

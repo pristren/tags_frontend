@@ -32,13 +32,16 @@ const TagsCard = () => {
   const [alreadySubmitted, setAlreadySubmitted] = useState([]);
 
   useEffect(() => {
+    // console.log();
     setLoading(true);
     const userInfo = JSON.parse(localStorage.getItem("user"));
     if (userInfo) {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/v1/tasks/user/${userInfo?.email}`
+            `${import.meta.env.VITE_SERVER_URL}/api/v1/tasks/user/${
+              userInfo?.email
+            }`
           );
           const submittedTasks = response.data.map((task) => {
             return {

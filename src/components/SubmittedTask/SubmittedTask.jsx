@@ -15,12 +15,12 @@ const SubmittedTask = () => {
   // const [completionPercentage, setCompletionPercentage] = useState(0);
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     if (query) {
       const getUserSubmissionsByEmail = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/v1/tasks/${query}`
+            `${import.meta.env.VITE_SERVER_URL}/api/v1/tasks/${query}`
           );
           setData(response.data);
         } catch (error) {
@@ -28,29 +28,29 @@ const SubmittedTask = () => {
             setData([]);
             setNoData("No submissions found");
           }
-        }finally{
-          setLoading(false)
+        } finally {
+          setLoading(false);
         }
       };
 
       const getUserInfo = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/v1/user/${query}`
+            `${import.meta.env.VITE_SERVER_URL}/api/v1/user/${query}`
           );
 
           setUserDt(response.data);
         } catch (error) {
           // do something, take it for later.
-        } finally{
-          setLoading(false)
+        } finally {
+          setLoading(false);
         }
       };
 
       // const completedPercentage = async () => {
       //   try {
       //     const response = await axios.get(
-      //       `http://localhost:5000/api/v1/tasks/user/${query}`
+      //       `${import.meta.env.VITE_SERVER_URL}/api/v1/tasks/user/${query}`
       //     );
       //     // setUserData(response.data.data);
       //     const completedTasks = response.data.data.filter(
@@ -68,8 +68,8 @@ const SubmittedTask = () => {
       getUserSubmissionsByEmail();
     }
   }, [query]);
-  if(loading){
-    return <Loader />
+  if (loading) {
+    return <Loader />;
   }
   return (
     <div className="w-full px-5 md:px-0 md:w-9/12 mx-auto min-h-screen ">

@@ -9,7 +9,7 @@ export const useAuth = () => {
       const fetchUserByEmail = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/v1/user/${userInfo?.email}`
+            `${import.meta.env.VITE_SERVER_URL}/api/v1/user/${userInfo?.email}`
           );
           setUser(response.data);
         } catch (error) {

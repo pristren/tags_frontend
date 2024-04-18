@@ -73,7 +73,11 @@ const App = () => {
 
             <Route
               path="/task-details/:id"
-              element={<TaskDetails></TaskDetails>}
+              element={
+                <PrivateRoute>
+                  <TaskDetails></TaskDetails>
+                </PrivateRoute>
+              }
             ></Route>
             <Route
               path="/complete-task"

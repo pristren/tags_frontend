@@ -19,7 +19,7 @@ const TaskDetails = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/v1/tasks/task/${id}`
+            `${import.meta.env.VITE_SERVER_URL}/api/v1/tasks/task/${id}`
           );
           setData(response.data.data);
         } catch (error) {
@@ -65,7 +65,7 @@ const TaskDetails = () => {
     };
 
     axios
-      .post(`http://localhost:5000/api/v1/tasks/submit`, postData)
+      .post(`${import.meta.env.VITE_SERVER_URL}/api/v1/tasks/submit`, postData)
       .then((res) => {
         if (res.status === 201) {
           setText("");
@@ -87,14 +87,18 @@ const TaskDetails = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/v1/tasks/submit/${id}`
+            `${import.meta.env.VITE_SERVER_URL}/api/v1/tasks/submit/${id}`
           );
-          const submittedTasks = {
-            taskName: response.data.task.taskName,
-            taskDescription: response.data.task.taskDescription,
-            tagName: response.data.tagName,
-          };
-          setAlreadySubmitted(submittedTasks);
+
+          if (response.data.message !== "Not Submitted yet") {
+            const submittedTasks = {
+              taskName: response.data.task.taskName,
+              taskDescription: response.data.task.taskDescription,
+              tagName: response.data.tagName,
+            };
+            setAlreadySubmitted(submittedTasks);
+          }
+
           setLoading(false);
         } catch (error) {
           setLoading(false);
@@ -109,58 +113,61 @@ const TaskDetails = () => {
     return <Loader />;
   }
 
+  console.log(data);
   return (
     <div className="flex justify-center items-center min-h-screen lg:min-h-[90vh] text-center relative text-black">
-      <div className="lg:w-9/12 mx-auto">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `url(${
-              data?.image || "https://i.ibb.co/9WTdd0b/download-18.jpg"
-            })`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            filter: "brightness(25%)",
-          }}
-        ></div>
-        <div className="absolute inset-0 bg-white opacity-40"></div>
-        <div className="relative z-10">
-          <h2 className="text-3xl font-bold text-center mb-6 mt-6">
-            {data.taskName}
-          </h2>
-          <p className="text-black text-center mx-auto w-1/2 mb-6">
-            {data.taskDescription}
-          </p>
-          <div className="border border-black max-w-xl my-10 mx-auto"></div>
-          <h3 className="text-2xl font-semibold">
-            Share your experience with us
-          </h3>
-          <p className="text-black mt-3">
-            Make a short video of you performing the task and <br /> keep it
-            with you. We gonna review it later.
-          </p>
-          <div className="flex flex-col gap-2 items-end justify-end w-[320px] mx-auto">
-            <textarea
-              type="text"
-              id="text"
-              className="border border-black bg-transparent rounded-md mt-6 w-full p-2 min-h-32 focus:ring-1 focus:ring-gray-700 focus:outline-none"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            />
-            <Button
-              className="w-full"
-              disabled={
-                alreadySubmitted.tagName === data.tagName &&
-                alreadySubmitted.taskDescription === data.taskDescription &&
-                alreadySubmitted.taskName === data.taskName
-              }
-              onClick={handleSubmit}
-            >
-              Submit
-            </Button>
+      {data?._id && (
+        <div className="lg:w-9/12 mx-auto">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url(${
+                data?.image || "https://i.ibb.co/9WTdd0b/download-18.jpg"
+              })`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              filter: "brightness(25%)",
+            }}
+          ></div>
+          <div className="absolute inset-0 bg-white opacity-40"></div>
+          <div className="relative z-10">
+            <h2 className="text-3xl font-bold text-center mb-6 mt-6">
+              {data.taskName}
+            </h2>
+            <p className="text-black text-center mx-auto w-1/2 mb-6">
+              {data.taskDescription}
+            </p>
+            <div className="border border-black max-w-xl my-10 mx-auto"></div>
+            <h3 className="text-2xl font-semibold">
+              Share your experience with us
+            </h3>
+            <p className="text-black mt-3">
+              Make a short video of you performing the task and <br /> keep it
+              with you. We gonna review it later.
+            </p>
+            <div className="flex flex-col gap-2 items-end justify-end w-[320px] mx-auto">
+              <textarea
+                type="text"
+                id="text"
+                className="border border-black bg-transparent rounded-md mt-6 w-full p-2 min-h-32 focus:ring-1 focus:ring-gray-700 focus:outline-none"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
+              <Button
+                className="w-full"
+                disabled={
+                  alreadySubmitted.tagName === data.tagName &&
+                  alreadySubmitted.taskDescription === data.taskDescription &&
+                  alreadySubmitted.taskName === data.taskName
+                }
+                onClick={handleSubmit}
+              >
+                Submit
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

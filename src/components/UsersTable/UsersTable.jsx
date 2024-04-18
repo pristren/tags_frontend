@@ -12,7 +12,9 @@ const UsersTable = () => {
     setLoading(true);
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/v1/user");
+        const response = await axios.get(
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/user`
+        );
         setUsers(response.data.data);
       } catch (error) {
         console.error("Error:", error);

@@ -17,8 +17,9 @@ const Login = () => {
 
   const onSubmit = (data) => {
     setLoading(true);
+
     axios
-      .post(`http://localhost:5000/api/v1/user/email-login`, data)
+      .post(`${import.meta.env.VITE_SERVER_URL}/api/v1/user/email-login`, data)
       .then((res) => {
         if (res.status === 201 || res.status === 200) {
           localStorage.setItem("user", JSON.stringify(res.data));
