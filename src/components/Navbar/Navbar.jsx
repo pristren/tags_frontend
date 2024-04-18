@@ -43,14 +43,12 @@ const Navbar = () => {
               <Button className="px-4 w-full">My Tasks</Button>
             </Link>
             <DropdownMenu>
-              <DropdownMenuTrigger>
-                <div className="border border-gray-300 rounded-full cursor-pointer  h-10 w-10">
-                  <img
-                    src="https://github.com/shadcn.png "
-                    alt=""
-                    className="w-full h-full rounded-full"
-                  />
-                </div>
+              <DropdownMenuTrigger asChild>
+                <img
+                  src="https://github.com/shadcn.png "
+                  alt=""
+                  className="h-10 w-10 rounded-full cursor-pointer border border-gray-300"
+                />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 {user?.role === "admin" && (

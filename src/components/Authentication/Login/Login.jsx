@@ -7,7 +7,7 @@ import { useState } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -16,7 +16,7 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    setLoading(true)
+    setLoading(true);
     axios
       .post(`http://localhost:5000/api/v1/user/email-login`, data)
       .then((res) => {
@@ -29,17 +29,17 @@ const Login = () => {
             navigate("/tags");
           }
           toast.success("Login was Successful!");
-          setLoading(false)
+          setLoading(false);
         }
       })
       .catch((error) => {
-        setLoading(false)
+        setLoading(false);
         toast.error("An error occurred. Please try again.");
       });
   };
 
   return (
-    <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+    <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-[90vh] lg:py-0">
       <div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 ">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl  text-center">
@@ -90,14 +90,20 @@ const Login = () => {
                 <p className="text-sm text-red-600">Password is Required!</p>
               )}
             </div>
-            <button type="submit"
-              className="w-full cursor-pointer text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 ">
-              {loading ? <l-line-spinner
-          size="20"
-          stroke="3"
-          speed="1"
-          color="white"
-        ></l-line-spinner> : "Login"}
+            <button
+              type="submit"
+              className="w-full cursor-pointer text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 "
+            >
+              {loading ? (
+                <l-line-spinner
+                  size="20"
+                  stroke="3"
+                  speed="1"
+                  color="white"
+                ></l-line-spinner>
+              ) : (
+                "Login"
+              )}
             </button>
           </form>
         </div>

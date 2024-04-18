@@ -32,7 +32,7 @@ const TagsCard = () => {
   const [alreadySubmitted, setAlreadySubmitted] = useState([]);
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     const userInfo = JSON.parse(localStorage.getItem("user"));
     if (userInfo) {
       const fetchData = async () => {
@@ -45,13 +45,13 @@ const TagsCard = () => {
               taskName: task.task.taskName,
               taskDescription: task.task.taskDescription,
               tagName: task.tagName,
-              image: task.image
+              image: task.image,
             };
           });
-          setLoading(false)
+          setLoading(false);
           setAlreadySubmitted(submittedTasks);
         } catch (error) {
-          setLoading(false)
+          setLoading(false);
           console.error("Error fetching data:", error);
         }
       };
@@ -61,8 +61,8 @@ const TagsCard = () => {
   }, []);
 
   const navigate = useNavigate();
-  if(loading){
-    return <Loader />
+  if (loading) {
+    return <Loader />;
   }
   return (
     <div className=" w-full px-5 md:px-0 md:w-9/12 mx-auto h-full py-10 ">
@@ -70,13 +70,18 @@ const TagsCard = () => {
         {userTag?.map((tag, i) => (
           <div key={i} className="relative">
             <div
-              className="flex justify-between bg-white shadow-md rounded-md h-32 cursor-pointer"
+              className="flex justify-between bg-white shadow-md rounded-md h-36 cursor-pointer overflow-hidden relative"
               onClick={() => setSelectedTagIndex(i)}
             >
+              {/* needs to remove then we can */}
+
+              <div className="absolute right-36 bg-white h-[9.7rem] -translate-y-3 w-20 rotate-12 "></div>
+              {/* needs to remove then we can */}
               <p className="p-4 text-lg font-bold">{tag?.TagName}</p>
               <img
                 src={tag?.image}
-                className="w-32 h-32 object-cover rounded-r-md"
+                loading="lazy"
+                className="w-48 h-36 object-cover rounded-r-md"
                 alt=""
               />
             </div>
@@ -109,7 +114,6 @@ const TagsCard = () => {
                       
                       `}
                     >
-
                       <div
                         className=""
                         style={{

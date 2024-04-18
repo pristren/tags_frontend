@@ -14,18 +14,18 @@ const TaskDetails = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     if (id) {
       const fetchData = async () => {
         try {
           const response = await axios.get(
             `http://localhost:5000/api/v1/tasks/task/${id}`
           );
-          console.log(response);
-          setLoading(false)
           setData(response.data.data);
         } catch (error) {
           console.error("Error fetching data:", error);
+        } finally {
+          setLoading(false);
         }
       };
 
@@ -34,7 +34,11 @@ const TaskDetails = () => {
   }, [id]);
 
   const handleSubmit = () => {
-    setLoading(true)
+    if (!userInfo) {
+      toast.error("Please login to submit the task.");
+      return;
+    }
+    setLoading(true);
     if (text.trim() === "") {
       toast.error("Please enter some text before submitting.");
       return;
@@ -47,13 +51,11 @@ const TaskDetails = () => {
       uniqueCode: userInfo.uniqueCode,
     };
 
-
     const taskData = {
       taskId: id,
       taskName: data.taskName,
       taskDescription: data.taskDescription,
     };
-
 
     const postData = {
       task: taskData,
@@ -69,17 +71,17 @@ const TaskDetails = () => {
           setText("");
           navigate("/");
           toast.success("Text submitted successfully!");
-          setLoading(false)
+          setLoading(false);
         }
       })
       .catch(() => {
-        setLoading(false)
+        setLoading(false);
         toast.error("An error occurred. Please try again.");
       });
   };
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     const userInfo = JSON.parse(localStorage.getItem("user"));
     if (userInfo) {
       const fetchData = async () => {
@@ -93,20 +95,19 @@ const TaskDetails = () => {
             tagName: response.data.tagName,
           };
           setAlreadySubmitted(submittedTasks);
-          setLoading(false)
+          setLoading(false);
         } catch (error) {
-          setLoading(false)
+          setLoading(false);
         }
       };
 
       fetchData();
     }
-  }, []);
+  }, [id]);
 
-  if(loading){
-    return <Loader />
+  if (loading) {
+    return <Loader />;
   }
-
 
   return (
     <div className="flex justify-center items-center min-h-screen lg:min-h-[90vh] text-center relative text-black">
@@ -119,10 +120,10 @@ const TaskDetails = () => {
             })`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            filter: "brightness(30%)",
+            filter: "brightness(25%)",
           }}
         ></div>
-        <div className="absolute inset-0 bg-white opacity-35"></div>
+        <div className="absolute inset-0 bg-white opacity-40"></div>
         <div className="relative z-10">
           <h2 className="text-3xl font-bold text-center mb-6 mt-6">
             {data.taskName}
@@ -146,7 +147,15 @@ const TaskDetails = () => {
               value={text}
               onChange={(e) => setText(e.target.value)}
             />
-            <Button className="w-full" disabled={alreadySubmitted.tagName === data.tagName && alreadySubmitted.taskDescription === data.taskDescription && alreadySubmitted.taskName === data.taskName} onClick={handleSubmit}>
+            <Button
+              className="w-full"
+              disabled={
+                alreadySubmitted.tagName === data.tagName &&
+                alreadySubmitted.taskDescription === data.taskDescription &&
+                alreadySubmitted.taskName === data.taskName
+              }
+              onClick={handleSubmit}
+            >
               Submit
             </Button>
           </div>
