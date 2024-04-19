@@ -7,7 +7,7 @@ import Loader from "../loader/Loader";
 
 const UsersTable = () => {
   const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(true);
     const fetchUsers = async () => {
@@ -29,7 +29,7 @@ const UsersTable = () => {
     return <Loader />;
   }
   return (
-    <div className="w-9/12 mx-auto">
+    <div className="w-full px-5 md:px-0 md:w-9/12 mx-auto min-h-screen">
       <table className="w-full border-collapse border border-gray-300">
         <thead>
           <tr>

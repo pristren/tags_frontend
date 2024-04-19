@@ -25,7 +25,23 @@ const Login = () => {
           localStorage.setItem("user", JSON.stringify(res.data));
           reset();
           if (res.status === 201) {
-            navigate("/");
+            const uniqueCode = res.data?.uniqueCode?.slice(0, 2);
+            axios
+              .get(
+                `${import.meta.env.VITE_SERVER_URL}/api/v1/tags/${uniqueCode}`
+              )
+              .then((response) => {
+                localStorage.setItem(
+                  "userTags",
+                  JSON.stringify(response?.data?.data?.tags)
+                );
+              })
+              .catch((error) => {})
+              .finally(() => {
+                navigate("/");
+              });
+            // navigate("/tags");
+            // console.log(response?.data);
           } else {
             navigate("/tags");
           }

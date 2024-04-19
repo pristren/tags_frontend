@@ -1,0 +1,20 @@
+[
+  {
+    "name": "John Doe",
+    "email": " jhon@doe.com",
+    "password": "123456",
+    "phone": "123-456-7890",
+    "uniqueCode": "12fsd4230",
+    "tagShow": true,
+    "role": "user"
+  },
+  {
+    "name": "John Doe",
+    "email": " jhon@doe.com",
+    "password": "123456",
+    "phone": "123-456-7890",
+    "uniqueCode": "12fsd4230",
+    "tagShow": true,
+    "role": "admin"
+  }
+]

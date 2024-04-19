@@ -41,6 +41,7 @@ const TaskDetails = () => {
     setLoading(true);
     if (text.trim() === "") {
       toast.error("Please enter some text before submitting.");
+      setLoading(false);
       return;
     }
 

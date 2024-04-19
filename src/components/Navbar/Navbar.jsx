@@ -22,7 +22,7 @@ const Navbar = () => {
   const { user } = useAuth();
   const handleLogout = () => {
     localStorage.removeItem("user");
-    // localStorage.removeItem("userTags");
+    localStorage.removeItem("userTags");
     navigate("/login");
   };
   // console.log(user);
@@ -52,7 +52,10 @@ const Navbar = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 {user?.role === "admin" && (
-                  <DropdownMenuItem className="w-full   text-center cursor-pointer font-semibold">
+                  <DropdownMenuItem
+                    asChild
+                    className="w-full   text-center cursor-pointer font-semibold"
+                  >
                     <Link to="/all-users">All Users</Link>
                   </DropdownMenuItem>
                 )}
