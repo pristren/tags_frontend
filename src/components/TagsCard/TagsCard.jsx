@@ -62,11 +62,16 @@ const TagsCard = () => {
       fetchData();
     }
   }, []);
+  const [open, setOpen] = useState({
+    open: false,
+    index: null,
+  });
 
   const navigate = useNavigate();
   if (loading) {
     return <Loader />;
   }
+
   return (
     <div className=" w-full px-5 md:px-0 md:w-9/12 mx-auto h-full py-10 ">
       <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-5">
@@ -74,7 +79,14 @@ const TagsCard = () => {
           <div key={i} className="relative">
             <div
               className="flex justify-between bg-white shadow-md rounded-md h-36 cursor-pointer overflow-hidden relative"
-              onClick={() => setSelectedTagIndex(i)}
+              onClick={() => {
+                if (open?.index === i && open?.open) {
+                  setOpen({ open: false, index: null });
+                } else {
+                  setOpen({ open: true, index: i });
+                }
+                setSelectedTagIndex(i);
+              }}
             >
               {/* needs to remove then we can */}
 
@@ -89,10 +101,10 @@ const TagsCard = () => {
               />
             </div>
             {/* Conditional rendering of tasks based on the selected tag */}
-            {selectedTagIndex === i && (
+            {open?.index === i && open?.open && (
               <div className="mt-8">
                 <div className="grid grid-cols-2 md:grid-cols-2 gap-2">
-                  {userTag[selectedTagIndex]?.values.map((task, index) => (
+                  {userTag[selectedTagIndex]?.values?.map((task, index) => (
                     <div
                       onClick={() => {
                         alreadySubmitted.find(

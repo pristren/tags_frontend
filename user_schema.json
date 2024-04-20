@@ -16,5 +16,14 @@
     "uniqueCode": "12fsd4230",
     "tagShow": true,
     "role": "admin"
+  },
+  {
+    "name": "Anushka Gupta",
+    "email": " anushkagupta20128@gmail.com",
+    "password": "123456",
+    "phone": "1234567890",
+    "uniqueCode": "02fsd4230",
+    "tagShow": true,
+    "role": "admin"
   }
 ]
