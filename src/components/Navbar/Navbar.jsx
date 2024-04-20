@@ -2,8 +2,9 @@ import { Infinity, Tally3 } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
-  SheetDescription,
+  // SheetDescription,
   SheetHeader,
   SheetTrigger,
 } from "../ui/sheet";
@@ -87,37 +88,37 @@ const Navbar = () => {
           <SheetContent>
             {userInfo ? (
               <SheetHeader className="pt-4">
-                <SheetDescription>
+                <SheetClose asChild>
                   <Link to="/complete-task">
                     <Button className="px-4 w-full">My Progress</Button>
                   </Link>
-                </SheetDescription>
-                <SheetDescription>
+                </SheetClose>
+                <SheetClose asChild>
                   <Link to="/">
                     <Button className="px-4 w-full">My Tasks</Button>
                   </Link>
-                </SheetDescription>
+                </SheetClose>
 
                 {user?.role === "admin" && (
-                  <SheetDescription>
+                  <SheetClose asChild>
                     <Link to="/all-users">
                       <Button className="px-4 w-full">All Users</Button>
                     </Link>
-                  </SheetDescription>
+                  </SheetClose>
                 )}
-                <SheetDescription>
+                <SheetClose asChild>
                   <Button className="px-4 w-full" onClick={handleLogout}>
                     LogOut
                   </Button>
-                </SheetDescription>
+                </SheetClose>
               </SheetHeader>
             ) : (
               <SheetHeader className="pt-4">
-                <SheetDescription>
+                <SheetClose asChild>
                   <Link to="/login">
                     <Button className="px-4 w-full">Login</Button>
                   </Link>
-                </SheetDescription>
+                </SheetClose>
               </SheetHeader>
             )}
           </SheetContent>
