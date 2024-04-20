@@ -41,7 +41,14 @@ const TaskDetails = () => {
     }
     setLoading(true);
     if (text.trim() === "") {
-      toast.error("Please enter some text before submitting.");
+      toast.error(
+        "Please enter some text in the experience box before submitting."
+      );
+      setLoading(false);
+      return;
+    }
+    if (videoLink.trim() === "") {
+      toast.error("Please enter the video link before submitting.");
       setLoading(false);
       return;
     }
@@ -152,7 +159,7 @@ const TaskDetails = () => {
               <input
                 type="text"
                 className="border border-black bg-transparent rounded-md mt-6 w-full p-2 focus:ring-1 focus:ring-gray-700 focus:outline-none placeholder:text-gray-800 placeholder:text-sm"
-                placeholder="Paste the video link here (optional)"
+                placeholder="Paste the video link here (make it public)"
                 value={videoLink}
                 onChange={(e) => setVideoLink(e.target.value)}
               />
