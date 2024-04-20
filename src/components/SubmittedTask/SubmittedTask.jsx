@@ -90,7 +90,7 @@ const SubmittedTask = () => {
             <tbody className="w-full border-collapse border border-gray-300">
               <tr>
                 <th className="border border-gray-300 px-4 py-2">Email</th>
-                <th className="border border-gray-300 px-4 py-2">Phone</th>
+
                 <th className="border border-gray-300 px-4 py-2">
                   Unique Code
                 </th>
@@ -98,14 +98,12 @@ const SubmittedTask = () => {
                 <th className="border border-gray-300 px-4 py-2">
                   Submitted Text
                 </th>
+                <th className="border border-gray-300 px-4 py-2">Video Link</th>
               </tr>
               {data?.map((details, i) => (
                 <tr key={i}>
                   <td className="border border-gray-300 px-4 py-2 text-center">
                     {details?.email}
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2 text-center">
-                    {details?.phone}
                   </td>
                   <td className="border border-gray-300 px-4 py-2 text-center">
                     {details?.uniqueCode}
@@ -115,6 +113,9 @@ const SubmittedTask = () => {
                   </td>
                   <td className="border border-gray-300 px-4 py-2 text-center">
                     {details?.text}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2 text-center">
+                    {details?.task?.video ? details?.task?.video : "N/A"}
                   </td>
                 </tr>
               ))}

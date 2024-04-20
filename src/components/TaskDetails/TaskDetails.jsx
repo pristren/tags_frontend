@@ -9,6 +9,7 @@ const TaskDetails = () => {
   const { id } = useParams();
   const [data, setData] = useState({});
   const [text, setText] = useState("");
+  const [videoLink, setVideoLink] = useState("");
   const userInfo = JSON.parse(localStorage.getItem("user"));
   const [alreadySubmitted, setAlreadySubmitted] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -56,6 +57,7 @@ const TaskDetails = () => {
       taskId: id,
       taskName: data.taskName,
       taskDescription: data.taskDescription,
+      video: videoLink,
     };
 
     const postData = {
@@ -143,14 +145,22 @@ const TaskDetails = () => {
               Share your experience with us
             </h3>
             <p className="text-black mt-3">
-              Make a short video of you performing the task and <br /> keep it
-              with you. We gonna review it later.
+              Make a short video of you performing the task and <br /> upload it
+              somewhere, then paste the link here.
             </p>
             <div className="flex flex-col gap-2 items-end justify-end w-[320px] mx-auto">
+              <input
+                type="text"
+                className="border border-black bg-transparent rounded-md mt-6 w-full p-2 focus:ring-1 focus:ring-gray-700 focus:outline-none placeholder:text-gray-800 placeholder:text-sm"
+                placeholder="Paste the video link here (optional)"
+                value={videoLink}
+                onChange={(e) => setVideoLink(e.target.value)}
+              />
               <textarea
                 type="text"
                 id="text"
-                className="border border-black bg-transparent rounded-md mt-6 w-full p-2 min-h-32 focus:ring-1 focus:ring-gray-700 focus:outline-none"
+                className="border border-black bg-transparent rounded-md mt-6 w-full p-2 min-h-32 focus:ring-1 focus:ring-gray-700 focus:outline-none placeholder:text-gray-800 placeholder:text-sm"
+                placeholder="Write your experience here..."
                 value={text}
                 onChange={(e) => setText(e.target.value)}
               />
